@@ -1,10 +1,3 @@
-/***************************************************************************
- * *    Inf2C-CS Coursework 2: TLB and Cache Simulation
- * *
- * *    Instructor: Boris Grot
- * *
- * *    TA: Priyank Faldu
- ***************************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -173,7 +166,7 @@ int page_offset = 0;						//page offset
 void cache_dm(mem_access_t access, uint32_t physical_page_num){
 
     uint32_t actual_page_offset = access.address & (page_size - 1);
-	physical_page_num = physical_page_num << page_offset;
+    physical_page_num = physical_page_num << page_offset;
     uint32_t physical_address = physical_page_num | actual_page_offset;
 
     uint32_t cacheTag = physical_address >> (g_cache_offset_bits + g_cache_index_bits);
@@ -404,13 +397,13 @@ int main(int argc, char** argv) {
             tlb_lru(access);
         }
         else if(hierarchy_type == cache_only){
-			uint32_t physical_page_numb = dummy_translate_virtual_page_num(access.address >> page_offset);
+	    uint32_t physical_page_numb = dummy_translate_virtual_page_num(access.address >> page_offset);
             cache_dm(access,physical_page_numb);
         }
-		else{
-			uint32_t rp = tlb_lru(access);
-			cache_dm(access, rp);          			//physical_page_num returned by tlb is sent to cache
-		}
+	else{
+	    uint32_t rp = tlb_lru(access);
+	    cache_dm(access, rp);          			//physical_page_num returned by tlb is sent to cache
+	}
 
         /* Feed the address to your TLB and/or Cache simulator and collect statistics. */
 
